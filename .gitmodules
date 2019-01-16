@@ -1,0 +1,3 @@
+[submodule "pure/live2d/live2d"]
+	path = pure/live2d/live2d
+	url = https://gitlab.com/sugina/Live2D
