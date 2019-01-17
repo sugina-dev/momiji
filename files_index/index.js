@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    fetch('/offprint/index.csv')
+    fetch('/pure/offprint/index.csv')
     .then(function(response) {
         return response.text();
     })
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function() {
             var xs = lines[i].split(',');
             if (xs.length == 2) {
                 articles += "<article>"
-                    + "<h3><a href=\"/offprint/" + xs[0] + ".html\">" + xs[1] + "</a></h3>"
+                    + "<h3><a href=\"/pure/offprint/" + xs[0] + ".html\">" + xs[1] + "</a></h3>"
                     + "</article>";
             }
         }
