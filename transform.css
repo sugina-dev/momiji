@@ -26,14 +26,14 @@ html, body {
 
 body {
 	background-image: linear-gradient(120deg, #e1feff, #e5ceff, #ffecfe);
-	font-family: sans-serif;
+	font-family: DengXian, sans-serif;
 	margin: 0;
 	padding: 4rem 20%;
 }
 
 @media screen and (max-width: 1152px) {
 	html {
-		font-size: 80%;
+		font-size: 85%;
 	}
 
 	body {
@@ -84,7 +84,7 @@ a {
 }
 
 a:link {
-	color: #7000ff;
+	color: dodgerblue;
 }
 
 a:hover {
