@@ -6,6 +6,8 @@ _Front end for the Sugina Development Group website_
 
 Web pages that work without back end are positioned in the `pure` folder.
 
+Web fonts are included in `font` folder.
+
 ## Deployment
 
 The root of this project is supposed to be accessed as the root of the website.

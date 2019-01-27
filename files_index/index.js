@@ -1,17 +1,19 @@
 "use strict";
 
+function makeArticle(path, fileName, title) {
+    return "<article>"
+    + "<h3><a href=\"" + path + fileName + ".html\">" + title + "</a></h3>"
+    + "</article>";
+}
+
 fetch('/api/dictum')
-.then(function(response) {
-    return response.text();
-})
+.then(function(response) { return response.text(); })
 .then(function(str) {
     document.getElementById("header_dictum").innerText = str;
 });
 
 fetch('/api/username')
-.then(function(response) {
-    return response.json();
-})
+.then(function(response) { return response.json(); })
 .then(function(res) {
     if (!res) {
         document.getElementById("h3_userinfo").innerHTML = "<a href=\"/auth/login\">Log In</a>";
@@ -22,45 +24,31 @@ fetch('/api/username')
 });
 
 fetch('/api/isadmin')
-.then(function(response) {
-    return response.json();
-})
+.then(function(response) { return response.json(); })
 .then(function(res) {
     if (res) {
         document.getElementById("span_contents_adminonly").style.display = "inherit";
 
         fetch('/api/kakitsubata/index.csv')
-        .then(function(response) {
-            return response.text();
-        })
+        .then(function(response) { return response.text(); })
         .then(function(str) {
-            var lines = str.split('\n'), articles = "";
-            for (var i = 0; i < lines.length; i++) {
-                var xs = lines[i].split(',');
-                if (xs.length == 2) {
-                    articles += "<article>"
-                        + "<h3><a href=\"/api/kakitsubata/" + xs[0] + ".html\">" + xs[1] + "</a></h3>"
-                        + "</article>";
-                }
-            }
-            document.getElementById("span_contents_adminonly_2").innerHTML += articles;
+            document.getElementById("span_contents_adminonly_2").innerHTML += str
+            .split('\n')
+            .map(function (x) { return x.split(','); })
+            .filter(function (x) { return x.length == 2; })
+            .map(function (x) { return makeArticle("/api/kakitsubata/", x[0], x[1]); })
+            .join('');
         });
     }
 });
 
-fetch('/pure/offprint/index.csv')
-.then(function(response) {
-    return response.text();
-})
+fetch('pure/offprint/index.csv')
+.then(function(response) { return response.text(); })
 .then(function(str) {
-    var lines = str.split('\n'), articles = "";
-    for (var i = 0; i < lines.length; i++) {
-        var xs = lines[i].split(',');
-        if (xs.length == 2) {
-            articles += "<article>"
-                + "<h3><a href=\"/pure/offprint/" + xs[0] + ".html\">" + xs[1] + "</a></h3>"
-                + "</article>";
-        }
-    }
-    document.getElementById("span_contents_pubdyn_offprint").innerHTML += articles;
+    document.getElementById("span_contents_pubdyn_offprint").innerHTML += str
+    .split('\n')
+    .map(function (x) { return x.split(','); })
+    .filter(function (x) { return x.length == 2; })
+    .map(function (x) { return makeArticle("pure/offprint/", x[0], x[1]); })
+    .join('');
 });
