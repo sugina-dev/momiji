@@ -56,7 +56,7 @@ nav > ul {
 }
 
 nav ul {
-	font-family: "Yu Gothic", "DengXian", sans;
+	font-family: "Yu Gothic", DengXian, sans;
 }
 
 nav > ul > li > ul {

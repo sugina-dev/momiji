@@ -20,7 +20,7 @@ box-sizing: border-box;
 
 body {
 background-color: #fff2ff;
-font-family: "Imprima", sans-serif;
+font-family: DengXian, sans-serif;
 margin: 0;
 }
 
@@ -92,6 +92,7 @@ margin: 0;
 }
 
 .contents article > p {
+font-family: "Imprima", sans-serif;
 margin-top: 0.5em;
 margin-bottom: 0;
 }
