@@ -18,7 +18,7 @@ fetch('/api/username')
     if (!res) {
         document.getElementById("h3_userinfo").innerHTML = "<a href=\"/auth/login\">Log In</a>";
     } else {
-        document.getElementById("span_contents_useronly").style.display = "inherit";
+        document.getElementById("contents_useronly").style.display = "inherit";
         document.getElementById("h3_userinfo").innerHTML = "Welcome, " + res + ". <a href=\"/auth/logout\">Log Out</a>";
     }
 });
@@ -27,12 +27,12 @@ fetch('/api/isadmin')
 .then(function(response) { return response.json(); })
 .then(function(res) {
     if (res) {
-        document.getElementById("span_contents_adminonly").style.display = "inherit";
+        document.getElementById("contents_adminonly").style.display = "inherit";
 
         fetch('/api/kakitsubata/index.csv')
         .then(function(response) { return response.text(); })
         .then(function(str) {
-            document.getElementById("span_contents_adminonly_2").innerHTML += str
+            document.getElementById("contents_adminonly").innerHTML += str
             .split('\n')
             .map(function (x) { return x.split(','); })
             .filter(function (x) { return x.length == 2; })
@@ -45,7 +45,7 @@ fetch('/api/isadmin')
 fetch('pure/offprint/index.csv')
 .then(function(response) { return response.text(); })
 .then(function(str) {
-    document.getElementById("span_contents_pubdyn_offprint").innerHTML += str
+    document.getElementById("contents_pubdyn_offprint").innerHTML += str
     .split('\n')
     .map(function (x) { return x.split(','); })
     .filter(function (x) { return x.length == 2; })

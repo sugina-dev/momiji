@@ -28,7 +28,7 @@ p {
 line-height: 1.5;
 }
 
-body > h1 {
+h1 {
 background-color: #ffbaba;
 box-shadow: 0 1px 5px #aaa;
 color: #8b00ff;
@@ -48,51 +48,56 @@ text-decoration: none;
 }
 
 a:link {
-color: #0038ff;
+color: #7000ff;
 }
 
 a:hover {
 color: DeepPink;
 }
 
-.contents {
-background-image: linear-gradient(120deg, #e1feff, #e5ceff, #ffecfe);
-border: 1px solid purple;
-border-radius: 7px;
-width: 80%;
-margin: 2em auto;
-padding: 1em;
-}
-
-@media screen and (max-width: 480px) {
-.contents {
-width: 90%;
-}
-}
-
-.contents > header {
+header {
 text-align: center;
 padding-top: 1.5em;
 font-size: 125%;
 }
 
-.contents h2 {
+section {
+background-image: linear-gradient(120deg, #e1feff, #e5ceff, #ffecfe);
+border: 1px solid purple;
+border-radius: 7px;
+width: 70%;
+margin: 2em auto;
+padding: 1.5em 1em;
+}
+
+@media screen and (max-width: 480px) {
+section {
+width: 90%;
+}
+}
+
+section > h2 {
+margin-top: 0;
 padding-left: 1em;
 }
 
-.contents article {
+section > article {
 background-color: rgba(255,255,255,0.375);
 border: 1.5px solid purple;
 margin: 0 0.5em;
 padding: 1em 1.5em;
 }
 
-.contents article > h3 {
+section > article:not(:last-child) {
+border-bottom-width: 0;
+}
+
+section article > h3 {
 margin: 0;
 }
 
-.contents article > p {
-font-family: "Imprima", sans-serif;
+section > article > p {
+font-family: "Imprima", DengXian, sans-serif;
 margin-top: 0.5em;
 margin-bottom: 0;
 }
@@ -101,6 +106,6 @@ margin-bottom: 0;
 text-align: center;
 }
 
-#span_contents_useronly, #span_contents_adminonly {
+#contents_useronly, #contents_adminonly {
 display: none;
 }
