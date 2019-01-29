@@ -1,113 +1,120 @@
 @font-face {
-font-family: "Alex Brush Font";
-src: url("../font/AlexBrush-Regular.ttf");
+	font-family: "Alex Brush Font";
+	src: url("../font/AlexBrush-Regular.ttf");
 }
 
 @font-face {
-font-family: "Imprima";
-src: url("../font/Imprima-Regular.ttf");
+	font-family: "Imprima";
+	src: url("../font/Imprima-Regular.ttf");
 }
 
 @media screen and (max-width: 768px) {
-body {
-font-size: 85%;
-}
+	body {
+		font-size: 85%;
+	}
 }
 
 * {
-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 body {
-background-color: #fff2ff;
-font-family: DengXian, sans-serif;
-margin: 0;
+	background-color: #fff2ff;
+	font-family: DengXian, sans-serif;
+	margin: 0;
 }
 
 p {
-line-height: 1.5;
+	line-height: 1.5;
 }
 
 h1 {
-background-color: #ffbaba;
-box-shadow: 0 1px 5px #aaa;
-color: #8b00ff;
-font-family: "Alex Brush Font", sans-serif;
-font-size: 250%;
-line-height: 1.25;
-margin: 0;
-padding: 1em;
+	background-color: #ffbaba;
+	box-shadow: 0 1px 5px #aaa;
+	color: #8b00ff;
+	font-family: "Alex Brush Font", sans-serif;
+	font-size: 250%;
+	line-height: 1.25;
+	margin: 0;
+	padding: 1em;
 }
 
 body > div {
-margin: 1em;
+	margin: 1em;
 }
 
 a {
-text-decoration: none;
+	text-decoration: none;
 }
 
 a:link {
-color: dodgerblue;
+	color: dodgerblue;
 }
 
 a:hover {
-color: DeepPink;
+	color: DeepPink;
 }
 
 header {
-font-size: 125%;
-line-height: 1.625;
-padding: 2em 2em 0 2em;
-text-align: center;
+	font-size: 125%;
+	line-height: 1.625;
+	padding: 2em 2em 0 2em;
+	text-align: center;
 }
 
 section {
-background-image: linear-gradient(120deg, #e1feff, #e5ceff, #ffecfe);
-border: 1px solid purple;
-border-radius: 7px;
-width: 70%;
-margin: 2em auto;
-padding: 1.5em 1em;
+	background-image: linear-gradient(120deg, #e1feff, #e5ceff, #ffecfe);
+	border: 1px solid purple;
+	border-radius: 7px;
+	width: 70%;
+	margin: 2em auto;
+	padding: 1.5em 1em;
 }
 
 @media screen and (max-width: 480px) {
-section {
-width: 90%;
-}
+	section {
+		width: 90%;
+	}
 }
 
 section > h2 {
-margin-top: 0;
-padding-left: 1em;
+	margin-top: 0;
+	padding-left: 1em;
 }
 
 section > article {
-background-color: rgba(255,255,255,0.375);
-border: 1.5px solid purple;
-margin: 0 0.5em;
-padding: 1em 1.5em;
+	background-color: rgba(255,255,255,0.375);
+	border: 1.5px solid purple;
+	margin: 0 0.5em;
+	padding: 1em 1.5em;
 }
 
 section > article:not(:last-child) {
-border-bottom-width: 0;
+	border-bottom-width: 0;
 }
 
-section article > h3 {
-margin: 0;
+section > article > h3 {
+	margin: 0;
 }
 
 section > article > p {
-font-family: "Imprima", DengXian, sans-serif;
-margin-top: 0.5em;
-margin-bottom: 0;
-text-align: justify;
+	font-family: "Imprima", DengXian, sans-serif;
+	margin-top: 0.5em;
+	margin-bottom: 0;
+	text-align: justify;
 }
 
-.footer {
-text-align: center;
+section > article > details > iframe {
+	margin: 1em 0;
+	height: 500px;
+	width: 100%;
+}
+
+footer {
+	margin: 2em 1em;
+	text-align: center;
 }
 
 #contents_useronly, #contents_adminonly {
-display: none;
+	display: none;
 }
