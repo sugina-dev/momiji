@@ -7,7 +7,7 @@ function escapeHTML(html) {
 }
 
 function btn_post() {
-    fetch('/api/board/message', {
+    fetch('https://api.sugina.cc/board/message', {
         method: 'POST',
         body: JSON.stringify(document.getElementById("textarea_comment").value),
         headers: {
@@ -24,7 +24,7 @@ function btn_post() {
 }
 
 function refreshBoard() {
-    fetch('/api/board/message')
+    fetch('https://api.sugina.cc/board/message')
     .then(function(response) {
         return response.json();
     })
@@ -32,26 +32,23 @@ function refreshBoard() {
         var content = "<table><th>Time</th><th>Message</th><th>Reply</th>";
         for (var i = 0; i < messages.length; i++) {
             content += "<tr>"
-                + "<td>" + messages[i].time + "</td>"
-                + "<td>" + escapeHTML(messages[i].message) + "</td>"
-                + "<td>" + escapeHTML(messages[i].reply) + "</td>"
-                + "</tr>";
+            + "<td>" + messages[i].time + "</td>"
+            + "<td>" + escapeHTML(messages[i].message) + "</td>"
+            + "<td>" + escapeHTML(messages[i].reply) + "</td>"
+            + "</tr>";
         }
         content += "</table>";
         document.getElementById("div_table").innerHTML = content;
     });
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    fetch('/api/username')
-    .then(function(response) {
-        return response.json();
-    })
-    .then(function(res) {
-        if (!res) {
-            document.body.innerHTML = "<h1>Please use this feature after logged in!</h1>";
-        } else {
-            refreshBoard();
-        }
-    });
+fetch('https://api.sugina.cc/isuser')
+.then(function(response) {
+    return response.json();
+})
+.then(function(res) {
+    refreshBoard();
+})
+.catch(function(response) {
+    document.body.innerHTML = "<h1>Please use this feature after logged in!</h1>";
 });

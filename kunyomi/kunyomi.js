@@ -3,7 +3,7 @@
 function queryKunyomi() {
     var wrd = document.getElementById("textInput").value;
 
-    fetch('/api/kunyomi/' + wrd)
+    fetch('https://api.sugina.cc/kunyomi/' + wrd)
     .then(function(response) {
         return response.json();
     })

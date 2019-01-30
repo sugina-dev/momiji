@@ -7,7 +7,7 @@ function escapeHTML(html) {
 }
 
 function rep_post(i, msgid) {
-    fetch('/api/board/manage', {
+    fetch('https://api.sugina.cc/board/manage', {
         method: 'POST',
         body: JSON.stringify({
             boardId: msgid,
@@ -27,7 +27,7 @@ function rep_post(i, msgid) {
 }
 
 function refreshBoard() {
-    fetch('/api/board/manage')
+    fetch('https://api.sugina.cc/board/manage')
     .then(function(response) {
         return response.json();
     })
@@ -35,30 +35,27 @@ function refreshBoard() {
         var content = "<table><th>Time</th><th>User Name</th><th>Message</th><th>Reply Message</th>";
         for (var i = 0; i < messages.length; i++) {
             var replyField = "<textarea id=\"textarea_" + i + "\"></textarea>"
-                + "<br /><button onclick=\"rep_post(" + i + ", " + messages[i].msgid + ")\">Post</button>";
+            + "<br /><button onclick=\"rep_post(" + i + ", " + messages[i].msgid + ")\">Post</button>";
 
             content += "<tr>"
-                + "<td>" + messages[i].time + "</td>"
-                + "<td>" + messages[i].userName + "</td>"
-                + "<td>" + escapeHTML(messages[i].message) + "</td>"
-                + "<td>" + (messages[i].replymsg ? escapeHTML(messages[i].replymsg) : replyField) + "</td>"
-                + "</tr>";
+            + "<td>" + messages[i].time + "</td>"
+            + "<td>" + messages[i].userName + "</td>"
+            + "<td>" + escapeHTML(messages[i].message) + "</td>"
+            + "<td>" + (messages[i].replymsg ? escapeHTML(messages[i].replymsg) : replyField) + "</td>"
+            + "</tr>";
         }
         content += "</table>";
         document.getElementById("div_table").innerHTML = content;
     });
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    fetch('/api/isadmin')
-    .then(function(response) {
-        return response.json();
-    })
-    .then(function(res) {
-        if (!res) {
-            document.body.innerHTML = "<h1>Please become an administrator to use this feature!</h1>";
-        } else {
-            refreshBoard();
-        }
-    });
+fetch('https://api.sugina.cc/isadmin')
+.then(function(response) {
+    return response.json();
+})
+.then(function(res) {
+    refreshBoard();
+})
+.catch(function(response) {
+    document.body.innerHTML = "<h1>Please become an administrator to use this feature!</h1>";
 });
