@@ -17,6 +17,6 @@ function queryKunyomi() {
                 spanCont += "<li>" + res[i] + "</li>";
             spanCont += "</ul>";
         }
-        document.getElementById("span_res").innerHTML = spanCont;
+        document.getElementById("res").innerHTML = spanCont;
     });
 }

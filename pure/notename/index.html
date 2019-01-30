@@ -5,16 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Note Name Calculator</title>
 <script>
+"use strict";
 function myRound(n) {
   return n >= 0 ? Math.round(n) : -Math.round(-n);
 }
 function calc(freq) {
-  function solve(f) {
-    return myRound(12 * Math.log(f / 440) / Math.log(2)) + 57;
-  }
-  var dif = solve(freq);
-  var divN = dif / 12 | 0;
-  var modN = dif % 12 | 0;
+  var dif = (function(f) { return myRound(12 * Math.log(f / 440) / Math.log(2)) + 57; })(freq);
+  var divN = dif / 12 | 0,
+      modN = dif % 12 | 0;
   if (modN < 0) {
     divN -= 1;
     modN += 12;
@@ -26,9 +24,9 @@ function calc(freq) {
 </head>
 <body>
   <h1>Note Name Calculator</h1>
-  <form oninput="result.value=calc(parseInt(freq.value))">
+  <form oninput="result.value = calc(parseFloat(freq.value))">
     <input name="freq" type="number" min="0" value="440" required />
-    <output name="result"></output>
+    <output name="result">A4</output>
   </form>
 </body>
 </html>

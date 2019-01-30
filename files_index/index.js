@@ -2,17 +2,14 @@
 
 function makeArticle(path, fileName, title) {
     return '<article>'
-    + '<details>'
-    + '<summary>' + title + '</summary>'
-    + '<iframe src="' + path + fileName + '.html"></iframe>'
-    + '</details>'
+    + '<h3><a href="' + path + fileName + '.html">' + title + '</a></h3>'
     + '</article>';
 }
 
 fetch('/api/dictum')
 .then(function(response) { return response.text(); })
 .then(function(str) {
-    document.getElementById('header_dictum').innerText = str;
+    document.getElementById('dictum').innerText = str;
 });
 
 fetch('/api/username')
