@@ -6,7 +6,7 @@ function makeArticle(path, fileName, title) {
     + '</article>';
 }
 
-fetch('https://api.sugina.cc/dictum')
+fetch('/api/dictum')
 .then(function(response) {
     return response.text();
 })
@@ -14,21 +14,21 @@ fetch('https://api.sugina.cc/dictum')
     document.getElementById('dictum').innerText = str;
 });
 
-fetch('https://api.sugina.cc/isuser')
+fetch('/api/isuser')
 .then(function(response) {
     if (!response.ok) { throw response; }
     return response.json();
 })
 .then(function(res) {
     document.getElementById('contents_useronly').style.display = 'inherit';
-    document.getElementById('h3_userinfo').innerHTML = 'Welcome, ' + res + '. <a href="https://api.sugina.cc/auth/logout">Log Out</a>';
+    document.getElementById('h3_userinfo').innerHTML = 'Welcome, ' + res + '. <a href="/api/auth/logout">Log Out</a>';
 })
 .catch(function(response) {
     if (response.status == 401)
-        document.getElementById('h3_userinfo').innerHTML = '<a href="https://api.sugina.cc/auth/login">Log In</a>';
+        document.getElementById('h3_userinfo').innerHTML = '<a href="/api/auth/login">Log In</a>';
 });
 
-fetch('https://api.sugina.cc/isadmin')
+fetch('/api/isadmin')
 .then(function(response) {
     if (!response.ok) { throw response; }
     return response.json();
@@ -37,14 +37,14 @@ fetch('https://api.sugina.cc/isadmin')
     if (res) {
         document.getElementById('contents_adminonly').style.display = 'inherit';
 
-        fetch('/pridyn/kakitsubata/index.csv')
+        fetch('/p/kakitsubata/index.csv')
         .then(function(response) { return response.text(); })
         .then(function(str) {
             document.getElementById('contents_adminonly').innerHTML += str
             .split("\n")
             .map(function (x) { return x.split(','); })
             .filter(function (x) { return x.length == 2; })
-            .map(function (x) { return makeArticle('/pridyn/kakitsubata/', x[0], x[1]); })
+            .map(function (x) { return makeArticle('/p/kakitsubata/', x[0], x[1]); })
             .join('');
         });
     }

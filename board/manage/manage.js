@@ -7,7 +7,7 @@ function escapeHTML(html) {
 }
 
 function rep_post(i, msgid) {
-    fetch('https://api.sugina.cc/board/manage', {
+    fetch('/api/board/manage', {
         method: 'POST',
         body: JSON.stringify({
             boardId: msgid,
@@ -27,7 +27,7 @@ function rep_post(i, msgid) {
 }
 
 function refreshBoard() {
-    fetch('https://api.sugina.cc/board/manage')
+    fetch('/api/board/manage')
     .then(function(response) {
         return response.json();
     })
@@ -49,7 +49,7 @@ function refreshBoard() {
     });
 }
 
-fetch('https://api.sugina.cc/isadmin')
+fetch('/api/isadmin')
 .then(function(response) {
     return response.json();
 })

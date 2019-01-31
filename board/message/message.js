@@ -7,7 +7,7 @@ function escapeHTML(html) {
 }
 
 function btn_post() {
-    fetch('https://api.sugina.cc/board/message', {
+    fetch('/api/board/message', {
         method: 'POST',
         body: JSON.stringify(document.getElementById("textarea_comment").value),
         headers: {
@@ -24,7 +24,7 @@ function btn_post() {
 }
 
 function refreshBoard() {
-    fetch('https://api.sugina.cc/board/message')
+    fetch('/api/board/message')
     .then(function(response) {
         return response.json();
     })
@@ -42,7 +42,7 @@ function refreshBoard() {
     });
 }
 
-fetch('https://api.sugina.cc/isuser')
+fetch('/api/isuser')
 .then(function(response) {
     return response.json();
 })
