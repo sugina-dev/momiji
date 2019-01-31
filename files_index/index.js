@@ -6,13 +6,24 @@ function makeArticle(path, fileName, title) {
     + '</article>';
 }
 
+function handleArticleCsv(str, path) {
+    return str
+    .split("\n")
+    .map(function (x) { return x.split(','); })
+    .filter(function (x) { return x.length == 2; })
+    .map(function (x) { return makeArticle(path, x[0], x[1]); })
+    .join('');
+}
+
 fetch('/api/dictum')
 .then(function(response) {
+    if (!response.ok) { throw response; }
     return response.text();
 })
 .then(function(str) {
     document.getElementById('dictum').innerText = str;
-});
+})
+.catch(function(response) {});
 
 fetch('/api/isuser')
 .then(function(response) {
@@ -28,38 +39,18 @@ fetch('/api/isuser')
         document.getElementById('h3_userinfo').innerHTML = '<a href="/api/auth/login">Log In</a>';
 });
 
-fetch('/api/isadmin')
+fetch('pure/offprint/index.csv')
+.then(function(response) { return response.text(); })
+.then(function(str) {
+    document.getElementById('contents_pubdyn_offprint').innerHTML += handleArticleCsv(str, 'pure/offprint/');
+});
+
+fetch('/p/kakitsubata/index.csv')
 .then(function(response) {
     if (!response.ok) { throw response; }
     return response.json();
 })
-.then(function(res) {
-    if (res) {
-        document.getElementById('contents_adminonly').style.display = 'inherit';
-
-        fetch('/p/kakitsubata/index.csv')
-        .then(function(response) { return response.text(); })
-        .then(function(str) {
-            document.getElementById('contents_adminonly').innerHTML += str
-            .split("\n")
-            .map(function (x) { return x.split(','); })
-            .filter(function (x) { return x.length == 2; })
-            .map(function (x) { return makeArticle('/p/kakitsubata/', x[0], x[1]); })
-            .join('');
-        });
-    }
+.then(function(str) {
+    document.getElementById('contents_adminonly').innerHTML += handleArticleCsv(str, '/p/kakitsubata/');
 })
 .catch(function(response) {});
-
-fetch('pure/offprint/index.csv')
-.then(function(response) {
-    return response.text();
-})
-.then(function(str) {
-    document.getElementById('contents_pubdyn_offprint').innerHTML += str
-    .split("\n")
-    .map(function (x) { return x.split(','); })
-    .filter(function (x) { return x.length == 2; })
-    .map(function (x) { return makeArticle('pure/offprint/', x[0], x[1]); })
-    .join('');
-});
