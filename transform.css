@@ -121,8 +121,7 @@ pre {
 }
 
 :not(pre) > code {
-	border-radius: 0.25rem;
-	padding: 0.125rem 0.25rem;
+	color: purple;
 }
 
 code {
@@ -141,9 +140,12 @@ blockquote {
 	padding: 0rem 1rem;
 }
 
-blockquote > * {
+blockquote {
+	font-size: 95%;
+}
+
+blockquote > p {
 	line-height: 1;
-	font-size: 90%;
 }
 
 table {
