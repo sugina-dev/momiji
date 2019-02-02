@@ -36,7 +36,7 @@ fetch('/api/isuser')
 })
 .catch(function(response) {
     if (response.status == 401)
-        document.getElementById('h3_userinfo').innerHTML = '<a href="/api/auth/login">Log In</a>';
+        document.getElementById('h3_userinfo').innerHTML = '<a href="/api/auth/page/gitlab/forward">Login Via GitLab</a>';
 });
 
 fetch('pure/offprint/index.csv')
