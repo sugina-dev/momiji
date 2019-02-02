@@ -51,6 +51,7 @@ fetch('/p/kakitsubata/index.csv')
     return response.json();
 })
 .then(function(str) {
+    document.getElementById('contents_adminonly').style.display = 'inherit';
     document.getElementById('contents_adminonly').innerHTML += handleArticleCsv(str, '/p/kakitsubata/');
 })
 .catch(function(response) {});
