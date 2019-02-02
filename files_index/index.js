@@ -48,7 +48,7 @@ fetch('pure/offprint/index.csv')
 fetch('/p/kakitsubata/index.csv')
 .then(function(response) {
     if (!response.ok) { throw response; }
-    return response.json();
+    return response.text();
 })
 .then(function(str) {
     document.getElementById('contents_adminonly').style.display = 'inherit';
