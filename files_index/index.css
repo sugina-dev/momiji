@@ -118,3 +118,8 @@ footer {
 #contents_useronly, #contents_adminonly {
 	display: none;
 }
+
+.corner {
+	margin: 0;
+	text-align: right;
+}
