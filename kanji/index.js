@@ -2,7 +2,7 @@
 
 function makeLi(str) { return '<li>' + str + '</li>'; }
 
-function makeList(xs) { return '<p>Result:</p><ul>' + xs.map(makeLi).join('') + '</ul>'; }
+function makeList(xs) { return '<ul>' + xs.map(makeLi).join('') + '</ul>'; }
 
 function queryKunyomi() {
     var wrd = document.getElementById('textInput').value;
@@ -11,7 +11,7 @@ function queryKunyomi() {
     .then(function(response) { return response.json(); })
     .then(function(res) {
         if (res) {
-            document.getElementById('kunyomi_title').display = 'inherit';
+            document.getElementById('kunyomi_title').style.display = 'inherit';
             document.getElementById('kunyomi_res').innerHTML = makeList(res);
         } else {
             document.getElementById('kunyomi_title').display = 'none';
