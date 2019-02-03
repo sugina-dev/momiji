@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Kanji</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="index.js"></script>
+  <link rel="stylesheet" href="../transform.css" />
+</head>
+<body>
+  <h1>Kanji</h1>
+  <p>The comprehensive yomikata finder</p>
+  <p>
+    <input type="text" id="textInput" size="30" placeholder="Input a Chinese character..." required />
+    <button onclick="queryKunyomi()">Search</button>
+  </p>
+  <h2 id="kunyomi_title" style="display: none;">Kunyomi</h2>
+  <div id="kunyomi_res"></div>
+  <h2 id="hanja_title" style="display: none;">Hanja</h2>
+  <div id="hanja_res"></div>
+</body>
+</html>
