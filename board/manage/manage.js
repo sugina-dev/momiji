@@ -18,7 +18,7 @@ function rep_post(i, msgid) {
         }
     })
     .then(function(response) {
-        return response.json();
+        return response.text();
     })
     .then(function(res) {
         document.getElementById("textarea_" + i).value = "";
@@ -29,6 +29,7 @@ function rep_post(i, msgid) {
 function refreshBoard() {
     fetch('/api/board/manage')
     .then(function(response) {
+        if (!response.ok) { throw response; }
         return response.json();
     })
     .then(function(messages) {
@@ -46,16 +47,11 @@ function refreshBoard() {
         }
         content += "</table>";
         document.getElementById("div_table").innerHTML = content;
+    })
+    .catch(function(response) {
+        if (response.status == 401)
+            document.body.innerHTML = "<h1>Please become an administrator to use this feature!</h1>";
     });
 }
 
-fetch('/api/isadmin')
-.then(function(response) {
-    return response.json();
-})
-.then(function(res) {
-    refreshBoard();
-})
-.catch(function(response) {
-    document.body.innerHTML = "<h1>Please become an administrator to use this feature!</h1>";
-});
+refreshBoard();

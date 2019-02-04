@@ -28,7 +28,7 @@ fetch('/api/dictum')
 fetch('/api/isuser')
 .then(function(response) {
     if (!response.ok) { throw response; }
-    return response.json();
+    return response.text();
 })
 .then(function(res) {
     document.getElementById('contents_useronly').style.display = 'inherit';

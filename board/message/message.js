@@ -15,7 +15,7 @@ function btn_post() {
         }
     })
     .then(function(response) {
-        return response.json();
+        return response.text();
     })
     .then(function(res) {
         document.getElementById("textarea_comment").value = "";
@@ -26,6 +26,7 @@ function btn_post() {
 function refreshBoard() {
     fetch('/api/board/message')
     .then(function(response) {
+        if (!response.ok) { throw response; }
         return response.json();
     })
     .then(function(messages) {
@@ -39,16 +40,11 @@ function refreshBoard() {
         }
         content += "</table>";
         document.getElementById("div_table").innerHTML = content;
+    })
+    .catch(function(response) {
+        if (response.status == 401)
+            document.body.innerHTML = "<h1>Please use this feature after logged in!</h1>";
     });
 }
 
-fetch('/api/isuser')
-.then(function(response) {
-    return response.json();
-})
-.then(function(res) {
-    refreshBoard();
-})
-.catch(function(response) {
-    document.body.innerHTML = "<h1>Please use this feature after logged in!</h1>";
-});
+refreshBoard();
