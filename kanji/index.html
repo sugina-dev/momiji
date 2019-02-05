@@ -9,14 +9,15 @@
 </head>
 <body>
   <h1>Kanji</h1>
-  <p>The comprehensive yomikata finder</p>
-  <p>
-    <input type="text" id="textInput" size="30" placeholder="Input a Chinese character..." required />
-    <button onclick="queryKunyomi()">Search</button>
-  </p>
-  <h2 id="kunyomi_title" style="display: none;">Kunyomi</h2>
-  <div id="kunyomi_res"></div>
-  <h2 id="hanja_title" style="display: none;">Hanja</h2>
-  <div id="hanja_res"></div>
+  <p><em>Comprehensive pronunciation finder for Chinese characters</em></p>
+  <p>Input a Chinese character to search (e.g. 花, 紬, 說).</p>
+  <form onsubmit="queryKunyomi(ch.value); return false">
+    <input type="text" name="ch" required />
+    <input type="submit" value="Search" />
+  </form>
+  <h2>Kunyomi</h2>
+  <div id="kunyomi"></div>
+  <h2>Hanja</h2>
+  <div id="hanja"></div>
 </body>
 </html>
