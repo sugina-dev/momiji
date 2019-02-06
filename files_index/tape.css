@@ -1,0 +1,25 @@
+/* Inspired by http://www.codeitpretty.com/2013/10/washi-tape-notes-with-html-css.html */
+
+article {
+	position: relative;
+	box-shadow: 0 4px 10px -5px rgba(0, 0, 0, 0.5);
+}
+
+article::before, article::after {
+	display: block;
+	position: absolute;
+}
+
+article::after {
+	content: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/652/large-washi-right.png);
+	right: -2em;
+	top: -2em;
+}
+
+@media screen and (max-width: 1152px) {
+	article::after {
+		right: -3.5em;
+		top: -2.5em;
+		transform: scale(0.8);
+	}
+}

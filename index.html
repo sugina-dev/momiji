@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script defer src="files_index/index.js"></script>
   <link rel="stylesheet" href="files_index/index.css" />
+  <link rel="stylesheet" href="files_index/tape.css" />
 </head>
 <body>
   <h1>The Sugina Development Group</h1>
@@ -15,15 +16,15 @@
     <h2>Utilities</h2>
     <article>
       <h3 id="h3_userinfo"></h3>
-      <p>Now we support log in via GitLab, after which you can post comments to keep in touch with us.</p>
+      <p>After log in via GitLab, you can post comments to keep in touch with us.</p>
     </article>
     <article>
       <h3><a href="kanji">Kanji</a></h3>
-      <p>Comprehensive pronunciation finder for Chinese characters. For testing the database of our server, and for testing the database of ourselves.</p>
+      <p>Comprehensive pronunciation finder for Chinese characters. It is the touchstone of the database of our server, and the touchstone of the database of ourselves.</p>
     </article>
     <article>
       <h3><a href="pure/notename">Note Name Calculator</a></h3>
-      <p>A simple calculator to convert frequency to note name.</p>
+      <p>A simple but well-designed calculator to convert frequency values to note names.</p>
     </article>
     <article>
       <h3><a href="pure/piano">Virtual Piano</a></h3>
@@ -56,16 +57,19 @@
     <h2>Projects</h2>
     <article>
       <h3><a href="https://gitlab.com/sugina/momiji">Momiji</a></h3>
-      <p>The front end for the Sugina Development Group website. It also contains some utilities written in JavaScript and a build system for blogs in Makefile, most of which are built from stretch.</p>
+      <p>The front end for the Sugina Development Group website which additionally contains a build system for blogs in Makefile written from stretch.</p>
     </article>
     <article>
       <h3><a href="https://gitlab.com/sugina/sugina">Sugina</a></h3>
-      <p>The main back end for the Sugina Development Group website. Written in Haskell to ensure type safety, it is an open-source project built for our bright futures.</p>
+      <p>The main back end for the Sugina Development Group website. Ensured type safety by Haskell, it is an open-source project built for our bright futures.</p>
     </article>
   </section>
 
-  <footer>Copyright &copy; 2018-2019 <a href="https://gitlab.com/sugina">The Sugina Development Group</a></footer>
-
-  <p class="corner"><a href="/api/auth/login">Administrator Tools</a></p>
+  <section>
+    <footer>
+      Copyright &copy; 2018-2019 <a href="https://gitlab.com/sugina">The Sugina Development Group</a> -
+      <a href="/api/auth/login">Administrator Tools</a>
+    </footer>
+  </section>
 </body>
 </html>
