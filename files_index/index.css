@@ -61,7 +61,7 @@ a:link {
 }
 
 a:hover {
-	color: DeepPink;
+	color: deeppink;
 }
 
 header {
@@ -109,14 +109,17 @@ section > article > h3 {
 	margin: 0;
 }
 
+section > article > h3::before {
+	color: deeppink;
+	padding-right: 1em;
+}
+
 section > article:nth-child(2n) > h3::before {
-	color: DeepPink;
-	content: "★　";
+	content: "★";
 }
 
 section > article:nth-child(2n+1) > h3::before {
-	color: DeepPink;
-	content: "❤　";
+	content: "❤";
 }
 
 section > article > p {
