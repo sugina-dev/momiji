@@ -6,21 +6,38 @@ function escapeHTML(html) {
     return p.innerHTML;
 }
 
-function btn_post() {
+function makeDateTime(str) {
+    return '<time datetime="' + str + '">'
+    + (new Date(str)).toLocaleString('ja-JP')
+    + '</time>';
+}
+
+function btn_post(str) {
     fetch('/api/board/message', {
         method: 'POST',
-        body: JSON.stringify(document.getElementById("textarea_comment").value),
+        body: JSON.stringify(str),
         headers: {
             'Content-Type': 'application/json'
         }
     })
     .then(function(response) {
-        return response.text();
-    })
-    .then(function(res) {
-        document.getElementById("textarea_comment").value = "";
+        document.getElementById('comment').value = '';
         refreshBoard();
     });
+}
+
+function makeTr(msg) {
+    return '<tr>'
+    + '<td>' + makeDateTime(msg.time) + '</td>'
+    + '<td>' + escapeHTML(msg.message) + '</td>'
+    + '<td>' + escapeHTML(msg.reply) + '</td>'
+    + '</tr>';
+}
+
+function makeTable(messages) {
+    return '<table><th>Time</th><th>Message</th><th>Reply</th>'
+    + messages.map(makeTr).join('')
+    + '</table>';
 }
 
 function refreshBoard() {
@@ -30,20 +47,11 @@ function refreshBoard() {
         return response.json();
     })
     .then(function(messages) {
-        var content = "<table><th>Time</th><th>Message</th><th>Reply</th>";
-        for (var i = 0; i < messages.length; i++) {
-            content += "<tr>"
-            + "<td>" + messages[i].time + "</td>"
-            + "<td>" + escapeHTML(messages[i].message) + "</td>"
-            + "<td>" + escapeHTML(messages[i].reply) + "</td>"
-            + "</tr>";
-        }
-        content += "</table>";
-        document.getElementById("div_table").innerHTML = content;
+        document.getElementById('div_table').innerHTML = makeTable(messages);
     })
     .catch(function(response) {
         if (response.status == 401)
-            document.body.innerHTML = "<h1>Please use this feature after logged in!</h1>";
+            document.body.innerHTML = '<h1>Please use this feature after logged in!</h1>';
     });
 }
 

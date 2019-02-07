@@ -9,8 +9,10 @@
 </head>
 <body>
   <h1>Message</h1>
-  <textarea id="textarea_comment" required="required"></textarea>
-  <p><button id="btn_post" onclick="btn_post()">Post</button></p>
+  <form onsubmit="btn_post(comment.value); return false">
+    <textarea id="comment" name="comment" required></textarea><br />
+    <input type="submit" value="Post" />
+  </form>
   <div id="div_table"></div>
 </body>
 </html>
