@@ -116,7 +116,7 @@ section > article:nth-child(2n) > h3::before {
 }
 
 section > article:nth-child(2n+1) > h3::before {
-	content: "❤";
+	content: "♥";
 }
 
 section > article > p {
