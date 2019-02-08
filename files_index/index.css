@@ -19,7 +19,7 @@
 
 body {
 	background-image: url(https://t4.ftcdn.net/jpg/01/94/24/07/240_F_194240734_jj7EeN8PKCXg0RUm4FHzzVowlrISksRK.jpg);
-	font-family: "Source Han Sans", sans-serif;
+	font-family: "Yu Gothic", "Source Han Sans", sans-serif;
 	margin: 0;
 }
 
@@ -124,11 +124,9 @@ section > article:nth-child(2n+1) > h3::before {
 
 section > article > p {
 	font-family: "Janda Quick Note", cursive;
-	font-weight: bold;
-	letter-spacing: 1px;
+	letter-spacing: 1.5px;
 	margin-top: 1em;
 	margin-bottom: 0;
-	text-align: justify;
 }
 
 #contents_useronly, #contents_adminonly {
@@ -139,7 +137,7 @@ footer {
 	color: purple;
 	font-size: 90%;
 	line-height: 1.625;
-	margin: 1em 2em;
+	padding: 0 2em 2em 2em;
 	text-align: center;
 }
 
