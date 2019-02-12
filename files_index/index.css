@@ -75,6 +75,7 @@ section {
 	background-size: 2.5em 2.5em;
 	border: 1px solid purple;
 	margin: 3em auto;
+	padding-bottom: 1.5em;
 	width: 800px;
 }
 
@@ -93,7 +94,7 @@ section > h2 {
 section > article {
 	background-color: rgba(255,255,255,0.375);
 	border: 0.375em double purple;
-	margin: 2em 3em;
+	margin: 1em 3em;
 	padding: 1em 1.5em;
 }
 
