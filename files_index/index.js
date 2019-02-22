@@ -39,10 +39,10 @@ fetch('/api/isuser')
         document.getElementById('h3_userinfo').innerHTML = '<a href="/api/auth/page/gitlab/forward">Log In via GitLab</a>';
 });
 
-fetch('pure/offprint/index.csv')
+fetch('/o/index.csv')
 .then(function(response) { return response.text(); })
 .then(function(str) {
-    document.getElementById('contents_pubdyn_offprint').innerHTML += handleArticleCsv(str, 'pure/offprint/');
+    document.getElementById('contents_pubdyn_offprint').innerHTML += handleArticleCsv(str, '/o/');
 });
 
 fetch('/p/kakitsubata/index.csv')
