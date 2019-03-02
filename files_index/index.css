@@ -94,13 +94,13 @@ section > h2 {
 section > article {
 	background-color: rgba(255,255,255,0.375);
 	border: 0.375em double purple;
-	margin: 1em 3em;
+	margin: 0.75em 3em;
 	padding: 1em 1.5em;
 }
 
 @media screen and (max-width: 1152px) {
 	section > article {
-		margin: 2em 2em;
+		margin: 0.75em 2em;
 	}
 }
 
