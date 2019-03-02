@@ -14,7 +14,7 @@
 
 body {
 	background-color: #ffa6b8;
-	background-image: url(https://t4.ftcdn.net/jpg/01/94/24/07/240_F_194240734_jj7EeN8PKCXg0RUm4FHzzVowlrISksRK.jpg);
+	background-image: url(240_F_194240734_jj7EeN8PKCXg0RUm4FHzzVowlrISksRK.jpg);
 	font-family: Helvetica, Arial, DengXian, sans-serif;
 	margin: 0;
 }
@@ -159,12 +159,12 @@ section::before, section::after {
 }
 
 section::before {
-	content: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/652/large-washi-left.png);
+	content: url(large-washi-left.png);
 	left: -2em;
 }
 
 section::after {
-	content: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/652/large-washi-right.png);
+	content: url(large-washi-right.png);
 	right: -2em;
 }
 
