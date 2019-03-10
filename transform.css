@@ -91,6 +91,11 @@ a:hover {
 	color: DeepPink;
 }
 
+p {
+	overflow: auto hidden;
+	word-break: break-word;
+}
+
 body > ul, body > :not(nav) ul, body > ol, body > :not(nav) ol, p {
 	line-height: 1.75;
 }
@@ -192,8 +197,4 @@ button:hover {
 
 .math {
 	font-family: "Georgia", "Cambria Math", "Times New Roman", Times, sans-serif;
-}
-
-p {
-	overflow: auto hidden;
 }
