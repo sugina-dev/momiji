@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Kanahan</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script src="aromanize.js"></script>
+  <script src="encode.js"></script>
+  <link rel="stylesheet" href="../../transform.css"/>
+</head>
+<body>
+  <h1>Kanahan</h1>
+
+  <p><em>Encoding Kana to Hangeul!</em><p>
+
+  <form onsubmit="handleEncode(); return false">
+    <legend>
+    <textarea id="encodeInput">iro ha nihoheto&#10;tirinuru uo&#10;ua ka io tare so&#10;tune naramu&#10;uui no okuiama&#10;kehu koete&#10;asaki iume misi&#10;ehi mo sesu</textarea>
+    <input type="submit" value="Encode"/>
+  </form>
+
+  <form onsubmit="handleDecode(); return false">
+    <textarea id="decodeInput"></textarea>
+    <textarea id="decodeRomanize" readonly></textarea>
+    <textarea id="decodeOutput" readonly></textarea>
+    <input type="submit" value="Decode"/>
+  </form>
+
+  <p id="isNotIdentical">The strings are not identical!</p>
+</body>
+</html>
