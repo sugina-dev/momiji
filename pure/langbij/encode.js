@@ -22,7 +22,19 @@ const rows = ['가','개','갸','걔','거','게','겨','계','고','과','괘',
 '효','후','훠','훼','휘','휴','흐','희','히'];  /* 294 */
 const cols = [27,21,19,17,16,13,12,11,10,9,8,7,4,1,0];  /* 15 */
 
-function int2hangul(a, b, c) {
+function romanizeHangulChar(ch) {
+	const thisCode = ord(ch) - ord('가'),
+		thisFin = thisCode % 28,
+		thisIniVow = thisCode / 28 | 0,
+		thisVow = thisIniVow % 21,
+		thisIni = thisIniVow / 21 | 0;
+
+	return ['g','kk','n','d','tt','l','m','b','pp','s','ss','','j','jj','ch','k','t','p','h'][thisIni]
+	+ ['a','ae','ya','yae','eo','e','yeo','ye','o','wa','wae','oe','yo','u','wo','we','wi','yu','eu','ui','i'][thisVow]
+	+ ['','g','kk','gs','n','nj','nh','d','l','lg','lm','lb','ls','lt','lp','lh','m','b','bs','s','ss','ng','j','ch','k','t','p','h'][thisFin];
+}
+
+function int4Tohangul(a, b, c) {
 	if (typeof c !== 'undefined' && c !== null) {
 		const i = (a * 1 << 8) + (b * 1 << 4) + c;
 		return ord(rows[i % 294]) + cols[i / 294 | 0];
@@ -35,6 +47,7 @@ function int2hangul(a, b, c) {
 	}
 }
 
+const romanizeHangulStr = xs => xs.split('').map(romanizeHangulChar).join('-');
 const japaneseChToInt4 = x => alphas[ord(x) - ord('a')];
 const int4ToJapaneseCh = x => chr(ord('a') + alphas.indexOf(x));
 const int4ToBinaryStr = x => x.toString(16);
@@ -58,10 +71,10 @@ function binaryStrToInt8Arr(xs) {
 	return Uint8Array.from(res);
 }
 
-function int4ArrToHangul(xs) {
+function int4ArrToHangulStr(xs) {
 	var res = '';
 	for (var i = 0, len = xs.length; i < len; i += 3)
-		res += chr(int2hangul(xs[i], xs[i + 1], xs[i + 2]));
+		res += chr(int4Tohangul(xs[i], xs[i + 1], xs[i + 2]));
 	return res;
 }
 
@@ -97,7 +110,7 @@ function handleDecode() {
 
 function handleEncode() {
 	if (encodeMethod.value == 'hangul')
-		translitInput.value = encodeOutput.value = encodeInput.value.replace(/\b([0-9a-f]+)\b/g, ($0, $1) => $0.replace($1, int4ArrToHangul(binaryStrToInt4Arr($1))));
+		translitInput.value = encodeOutput.value = encodeInput.value.replace(/\b([0-9a-f]+)\b/g, ($0, $1) => $0.replace($1, int4ArrToHangulStr(binaryStrToInt4Arr($1))));
 	else if (encodeMethod.value == 'japanese')
 		encodeOutput.value = encodeInput.value.replace(/\b([0-9a-f]+)\b/g, ($0, $1) => $0.replace($1, int4ArrToJapaneseStr(binaryStrToInt4Arr($1))));
 	else if (encodeMethod.value == 'utf8')
@@ -105,5 +118,5 @@ function handleEncode() {
 }
 
 function handleTranslit() {
-	translitOutput.value = translitInput.value.replace(/([가-힣]+)/g, ($0, $1) => $0.replace($1, $1.romanize()));
+	translitOutput.value = translitInput.value.replace(/([가-힣]+)/g, ($0, $1) => $0.replace($1, romanizeHangulStr($1)));
 }

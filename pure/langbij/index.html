@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>HE Encode</title>
+  <title>Language Bijection</title>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <script src="aromanize.js"></script>
   <script src="encode.js"></script>
   <link rel="stylesheet" href="../../transform.css"/>
 </head>
 <body>
-  <h1>HE Encode</h1>
+  <h1>Language Bijection</h1>
 
-  <p><em>Human-readable binary encoding to Hangul, inspired by <a href="https://basehangul.github.io/">BaseHangul</a>.</em></p>
+  <p><em>Human-readable binary encoding to Hangul inspired by BaseHangul.</em></p>
 
   <h2>Everything to Binary</h2>
   <form onsubmit="handleDecode(); return false">
@@ -43,5 +42,7 @@
     <input type="submit" value="Translit"/>
     <textarea id="translitOutput" readonly></textarea>
   </form>
+
+  <p><footer><a href="rule.html">编码规则</a></footer></p>
 </body>
 </html>
