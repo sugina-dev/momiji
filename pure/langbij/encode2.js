@@ -77,18 +77,18 @@ function jaDualToKo0(c1, v1, c2, v2) {
 		const koV = [13,20,0,8,5][v1x];  // aeiou -> uoiea
 		const koCon =
 			[ 11  // a -> ''
-			, 9  // k -> 's'
-			, 17  // s -> 'p'
-			, 6  // t -> 'm'
+			, 15  // k -> 'k'
+			, 9  // s -> 's'
+			, 16  // t -> 't'
 			, 18  // h -> 'h'
-			, 7  // n -> 'b'
-			, 3  // m -> 'd'
-			, 10  // r -> 'ss'
-			, 2  // g -> 'n'
-			, 0  // z -> 'g'
-			, 15  // d -> 'k'
-			, 16  // b -> 't'
-			, 5  // miscellaneous -> 'l'
+			, 2  // n -> 'n'
+			, 6  // m -> 'm'
+			, 5  // r -> 'l'
+			, 0  // g -> 'g'
+			, 17  // z -> 'p'
+			, 3  // d -> 'd'
+			, 7  // b -> 'b'
+			, 10  // miscellaneous -> 'ss'
 			][c1x];
 		return { 'type': 2, 'con': koCon, 'vow': koV };
 	}
