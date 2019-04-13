@@ -38,12 +38,21 @@ function jaDualToKo0(c1, v1, c2, v2) {
 
 		const koV = jaVToKoV.indexOf(regV1 + regV2);
 
-		if (koV != -1) {  // 13 * 13 * 21
-			const koPat = mergeC % 10,
-				koCon = mergeC / 10 | 0,  // koCon[koPat] in range 0[0] - 15[9] && 16[0] - 16[8]
-				koPatX = [21,1,8,4,7,19,16,17,27,20][koPat],  // 'ng','g','l','n','d','s','m','b','h','ss'
-				koConX = [5,4,7,6,1,0,3,2,13,12,15,14,9,8,11,10,16][koCon];
-			return { 'type': 1, 'con': koConX, 'vow': koV, 'pat': koPatX };
+		if (koV != -1) {  // 13 * 13 * 21 = 169 * 21
+			if (mergeC < 11 * 10) {  // 11 * 10 * 21 = 110 * 21 = 11(con) * 21(vow) * 10(pat)
+				const koPat = mergeC % 10,
+					koCon = mergeC / 10 | 0,
+					koPatX = [21,1,8,4,7,19,16,17,27,20][koPat],  // 'ng','g','l','n','d','s','m','b','h','ss'
+					koConX = [11,6,7,0,3,10,2,15,9,5,16][koCon];
+				return { 'type': 1, 'con': koConX, 'vow': koV, 'pat': koPatX };
+			} else {  // 59 * 21 = 5(con) * 21(vow) * 11(pat) + 21(vow) * 4(pat)
+				const num = mergeC - 11 * 10,
+					koPat = num % 11,
+					koCon = num / 11 | 0,
+					koPatX = [0,21,1,8,4,7,19,16,17,27,20][koPat],  // '','ng','g','l','n','d','s','m','b','h','ss'
+					koConX = [12,14,1,4,13,8][koCon];  // [0-7 9-16] * 11 (0,21,1,8,4,7,19,16,17,27,20) + 8 * 4 (0,21,1,8)
+				return { 'type': 1, 'con': koConX, 'vow': koV, 'pat': koPatX };
+			}
 		} else {  // 13 * 13 * 4
 			let vId;
 			if (regV1 + regV2 == 'oe') { vId = 0; }
@@ -94,25 +103,21 @@ function ko0ToKo(obj) {
 			return mkKo(obj.con, obj.vow, 0);
 		case 3:  // 13 * 13 * 4
 			// to fill still empty blocks
-			// con = 1,4,8,12,13,14, vow = all, pat = 0 => 6 * 21 * 1 = 126
 			// con = 0,2,3,5,6,7,9,10,11,15,16,17,18, vow = not a,e,i,o,u, pat = 0 => 13 * 16 * 1 = 208
-			// con = 16, vow = all, pat = 20 => 1 * 21 * 1 = 21
+			// con = 8, vow = all, pat = 4,7,19,16,17,27,20 => 1 * 21 * 7 = 147
 			// con = 17,18, vow = all, pat = not 0 => 2 * 21 * 10 = 420
-			if (obj.num < 126) {
+			if (obj.num < 208) {
 				const num = obj.num,
-					vow = num % 21,
-					con = [1,4,8,12,13,14][num / 21 | 0];
-				return mkKo(con, vow, 0);
-			} else if (obj.num - 126 < 208) {
-				const num = obj.num - 126,
 					vow = [1,2,3,4,6,7,9,10,11,12,14,15,16,17,18,19][num % 16],
 					con = [0,2,3,5,6,7,9,10,11,15,16,17,18][num / 16 | 0];
 				return mkKo(con, vow, 0);
-			} else if (obj.num - 126 - 208 < 21) {
-				const num = obj.num - 126 - 208;
-				return mkKo(16, num, 20);
-			} else if (obj.num - 126 - 208 - 21 < 420) {
-				const num = obj.num - 126 - 208 - 21,
+			} else if (obj.num - 208 < 147) {
+				const num = obj.num - 208,
+					pat = [4,7,19,16,17,27,20][num % 7],
+					vow = num / 7 | 0;
+				return mkKo(8, vow, pat);
+			} else if (obj.num - 208 - 147 < 420) {
+				const num = obj.num - 208 - 147,
 					pat = [21,1,8,4,7,19,16,17,27,20][num % 10],
 					conVow = num / 10 | 0,
 					vow = conVow % 21,
