@@ -43,7 +43,7 @@ function jaDualToKo0(c1, v1, c2, v2) {
 				const koPat = mergeC % 10,
 					koCon = mergeC / 10 | 0,
 					koPatX = [21,1,8,4,7,19,16,17,27,20][koPat],  // 'ng','g','l','n','d','s','m','b','h','ss'
-					koConX = [11,6,7,0,3,10,2,15,9,5,16][koCon];
+					koConX = [11,6,7,0,5,10,2,15,9,3,16][koCon];
 				return { 'type': 1, 'con': koConX, 'vow': koV, 'pat': koPatX };
 			} else {  // 59 * 21 = 5(con) * 21(vow) * 11(pat) + 21(vow) * 4(pat)
 				const num = mergeC - 11 * 10,
