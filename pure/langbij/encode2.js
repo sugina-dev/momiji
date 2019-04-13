@@ -1,286 +1,182 @@
 "use strict";
 
-// should have the three external functions: chr ord romanizeHangulChar
+// should have the three external functions: chr ord
 
-const japaneseCharDict = 'あいうえおかきくけこさしすせそたちつてとはひふへほなにぬねのまみむめもらりるれろがぎぐげござじずぜぞだぢづでどわやゆよ'.split('');
-
-const japaneseVowelToKorean = ['u','ui',0,'uei','ue','iu','i','ia','io','ie','eui','ai','a',1,'eu','oai','oi','oa','o',2,'iei','ei',3,'iai','e'];
-
-function japaneseCharDualToCode(ch1, ch2) {
-	// Calculate ch1
-	const x1 = japaneseCharDict.indexOf(ch1); console.assert(x1 >= 0);
-	const consonant1 = x1 / 5 | 0, vowel1 = x1 % 5;
-
-	if (ch2) {
-		// Calculate ch2
-		const x2 = japaneseCharDict.indexOf(ch2); console.assert(x2 >= 0);
-		const consonant2 = x2 / 5 | 0, vowel2 = x2 % 5;
-
-		if (consonant1 != 11 && consonant2 != 11) {
-			const mixedVowel = vowel1 * 5 + vowel2;
-			const changedVowelName = japaneseVowelToKorean[mixedVowel];
-			const mixedConsonant = consonant1 * 11 + consonant2;
-
-			if (typeof changedVowelName == 'string') {
-				return {
-					"type": 1,
-					"conpat": mixedConsonant,
-					"vowel": changedVowelName
-				};
-			} else {
-				return {
-					"type": 4,
-					"vowel": 11 * 5 * 4 * 2 + 4 * 4 + 4 + mixedConsonant * 4 + changedVowelName
-				};
-			}
-		} else if (consonant1 != 11 && consonant2 == 11) {
-			return {
-				"type": 4,
-				"vowel": x1 * 4 + vowel2
-			};
-		} else if (consonant1 == 11 && consonant2 != 11) {
-			return {
-				"type": 4,
-				"vowel": 11 * 5 * 4 + x2 * 4 + vowel1
-			};
+function jaDualToKo0(c1, v1, c2, v2) {
+	const cMap = c => {
+		if (c == '') {
+			return 0;
 		} else {
-			return {
-				"type": 4,
-				"vowel": 11 * 5 * 4 * 2 + vowel1 * 4 + vowel2
-			};
+			const idx = 'ksthnmrgzdb'.split('').indexOf(c);
+			if (idx != -1)
+				return idx + 1;
+			else
+				return 12;
 		}
-	} else {
-		if (consonant1 != 11) {
-			return {
-				"type": 2,
-				"conpat": consonant1,
-				"vowel": ['u','i','a','o','e'][vowel1]
+	};
+
+	const jaVToKoV = ['uu','ui','iu','ou','oo','oi','io','oa','ue','eu','ea','au','ie','aa','ao','ae','ai','ia','uo','ua','ii'];
+
+	if (c2 !== null && typeof c2 != 'undefined' && v2 !== null && typeof v2 != 'undefined') {
+		const regularize12 =
+			{ 'ya': 'a'
+			, 'qi': 'i'
+			, 'yu': 'u'
+			, 'wa': 'e'
+			, 'yo': 'o'
 			};
-		} else {
-			return {
-				"type": 4,
-				"vowel": 11 * 5 * 4 * 2 + 4 * 4 + vowel1
-			};
+
+		const c1x = cMap(c1),
+			c2x = cMap(c2),
+			mergeC = c1x * 13 + c2x;
+
+		let regV1 = v1, regV2 = v2;
+		if (c1x == 12)
+			regV1 = regularize12[c1 + v1];
+		if (c2x == 12)
+			regV2 = regularize12[c2 + v2];
+
+		const koV = jaVToKoV.indexOf(regV1 + regV2);
+
+		if (koV != -1) {  // 13 * 13 * 21
+			const koPat = mergeC % 10,
+				koCon = mergeC / 10 | 0,  // koCon[koPat] in range 0[0] - 15[9] && 16[0] - 16[8]
+				koPatX = [21,1,8,4,7,19,16,17,27,20][koPat],  // 'ng','g','l','n','d','s','m','b','h','ss'
+				koConX = [5,4,7,6,1,0,3,2,13,12,15,14,9,8,11,10,16][koCon];
+			return { 'type': 1, 'con': koConX, 'vow': koV, 'pat': koPatX };
+		} else {  // 13 * 13 * 4
+			let vId;
+			if (regV1 + regV2 == 'oe') { vId = 0; }
+			else if (regV1 + regV2 == 'eo') { vId = 1; }
+			else if (regV1 + regV2 == 'ei') { vId = 2; }
+			else if (regV1 + regV2 == 'ee') { vId = 3; }
+			else { throw 'Error ' + regV1 + ' ' + regV2; }
+			return { 'type': 3, 'num': mergeC * 4 + vId };
 		}
+	} else {  // 13 * 5
+		const vMap = (c, v) => {
+			if (cMap(c) != 12) { return 'aiueo'.split('').indexOf(v); }
+			else if (c + v == 'ya') { return 0; }
+			else if (c + v == 'qi') { return 1; }
+			else if (c + v == 'yu') { return 2; }
+			else if (c + v == 'wa') { return 3; }
+			else if (c + v == 'yo') { return 4; }
+			else { throw 'Error ' + c + ' ' + v; }
+		};
+
+		const c1x = cMap(c1), v1x = vMap(c1, v1);
+		const koV = [13,20,0,8,5][v1x];  // aeiou -> uoiea
+		const koCon =
+			[ 11  // a -> ''
+			, 9  // k -> 's'
+			, 17  // s -> 'p'
+			, 6  // t -> 'm'
+			, 18  // h -> 'h'
+			, 7  // n -> 'b'
+			, 3  // m -> 'd'
+			, 10  // r -> 'ss'
+			, 2  // g -> 'n'
+			, 0  // z -> 'g'
+			, 15  // d -> 'k'
+			, 16  // b -> 't'
+			, 5  // miscellaneous -> 'l'
+			][c1x];
+		return { 'type': 2, 'con': koCon, 'vow': koV };
 	}
 }
 
-const conTable = ['h','g','k','gg','m','b','p','bb','n','d','t','dd','j','ch','jj','','s','ss','l'];  // 19
-const patTable = ['l','s','ng','n','m','g','d','b'];  // 8, without ''
-
-const vowWithoutAEIOU = ['ai','ia','iai','ei','ie','iei','oa','oai','oi','io','ue','uei','ui','iu','eu','eui'];  // 16
-const vowWithAEIOU = ['a','ai','ia','iai','e','ei','ie','iei','o','oa','oai','oi','io','u','ue','uei','ui','iu','eu','eui','i'];  // 21
-
-function codeToCode2(obj) {
+function ko0ToKo(obj) {
+	const mkKo = (con, vow, pat) => chr(ord('가') + con * 21 * 28 + vow * 28 + pat);
 	switch (obj.type) {
-		case 1:  // 11 * 11 * 21
-			const con = conTable[obj.conpat / 8 | 0] , pat = patTable[obj.conpat % 8];
-			// h-l ~ jj-b & -l, 15 * 8 + 1 = 11 * 11
-			return { "con": con, "vowel": obj.vowel, "pat": pat };
-		case 2:  // 11 * 5
-			const conpat = [ ['h', '']
-						, ['k', '']
-						, ['m', '']
-						, ['n', '']
-						, ['', '']
-						, ['s', '']
-						, ['ss', '']
-						, ['l', '']
-						, ['s', 'l']
-						, ['ss', 'l']
-						, ['l', 'l']
-						][obj.conpat];
-			return { "con": conpat[0], "vowel": obj.vowel, "pat": conpat[1] };
-		case 4:  // 11 * 5 * 4 * 2 + 4 * 4 + 11 * 11 * 4
-			if (obj.vowel < 16) {
-				return { "con": '', "vowel": vowWithoutAEIOU[obj.vowel], "pat": '' };
-			} else if (obj.vowel - 16 < 147) {
-				const pat = (obj.vowel - 16) % 7,
-						vow = (obj.vowel - 16) / 7 | 0;
-				return { "con": '', "vowel": vowWithAEIOU[vow], "pat": ['s','ng','n','m','g','d','b'][pat] };
-			} else if (obj.vowel - 16 - 147 < 441) {
-				const pat = (obj.vowel - 16 - 147) % 7,
-						convow = (obj.vowel - 16 - 147) / 7 | 0,
-						vow = convow % 21,
-						con = convow / 21 | 0;
-				return { "con": ['s','ss','l'][con], "vowel": vowWithAEIOU[vow], "pat": ['s','ng','n','m','g','d','b'][pat] };
-			} else if (obj.vowel - 16 - 147 - 441 < 96) {
-				const pat = (obj.vowel - 16 - 147 - 441) % 2,
-						convow = (obj.vowel - 16 - 147 - 441) / 2 | 0,
-						vow = convow % 16,
-						con = convow / 16 | 0;
-				return { "con": ['s','ss','l'][con], "vowel": vowWithoutAEIOU[vow], "pat": ['','l'][pat] };
-			} else if (obj.vowel - 16 - 147 - 441 - 96 < 64) {
-				const vow = (obj.vowel - 16 - 147 - 441 - 96) % 16,
-						con = (obj.vowel - 16 - 147 - 441 - 96) / 16 | 0;
-				return { "con": ['h','k','m','n'][con], "vowel": vowWithoutAEIOU[vow], "pat": '' };
-			} else if (obj.vowel - 16 - 147 - 441 - 96 - 64 < 231) {
-				const vow = (obj.vowel - 16 - 147 - 441 - 96 - 64) % 21,
-						con = (obj.vowel - 16 - 147 - 441 - 96 - 64) / 21 | 0;
-				return { "con": ['g','gg','b','p','bb','d','t','dd','j','ch','jj'][con], "vowel": vowWithAEIOU[vow], "pat": '' };
-			} else {
-				throw "Too large:" + obj.vowel;
+		case 1:  // 13 * 13 * 21 = 3549
+			return mkKo(obj.con, obj.vow, obj.pat);
+		case 2:  // 13 * 5 = 65
+			return mkKo(obj.con, obj.vow, 0);
+		case 3:  // 13 * 13 * 4
+			// to fill still empty blocks
+			// con = 1,4,8,12,13,14, vow = all, pat = 0 => 6 * 21 * 1 = 126
+			// con = 0,2,3,5,6,7,9,10,11,15,16,17,18, vow = not a,e,i,o,u, pat = 0 => 13 * 16 * 1 = 208
+			// con = 16, vow = all, pat = 20 => 1 * 21 * 1 = 21
+			// con = 17,18, vow = all, pat = not 0 => 2 * 21 * 10 = 420
+			if (obj.num < 126) {
+				const num = obj.num,
+					vow = num % 21,
+					con = [1,4,8,12,13,14][num / 21 | 0];
+				return mkKo(con, vow, 0);
+			} else if (obj.num - 126 < 208) {
+				const num = obj.num - 126,
+					vow = [1,2,3,4,6,7,9,10,11,12,14,15,16,17,18,19][num % 16],
+					con = [0,2,3,5,6,7,9,10,11,15,16,17,18][num / 16 | 0];
+				return mkKo(con, vow, 0);
+			} else if (obj.num - 126 - 208 < 21) {
+				const num = obj.num - 126 - 208;
+				return mkKo(16, num, 20);
+			} else if (obj.num - 126 - 208 - 21 < 420) {
+				const num = obj.num - 126 - 208 - 21,
+					pat = [21,1,8,4,7,19,16,17,27,20][num % 10],
+					conVow = num / 10 | 0,
+					vow = conVow % 21,
+					con = [17,18][conVow / 21 | 0];
+				return mkKo(con, vow, pat);
 			}
 	}
 }
-
-const conMap =
-{ 'h': 18
-, 'g': 0
-, 'k': 15
-, 'gg': 1
-, 'm': 6
-, 'b': 7
-, 'p': 17
-, 'bb': 8
-, 'n': 2
-, 'd': 3
-, 't': 16
-, 'dd': 4
-, 'j': 12
-, 'ch': 14
-, 'jj': 13
-, '': 11
-, 's': 9
-, 'ss': 10
-, 'l': 5
-};
-
-var vowelMap =
-{ "a": 0
-, "ai": 1
-, "ia": 2
-, "iai": 3
-, "e": 4
-, "ei": 5
-, "ie": 6
-, "iei": 7
-, "o": 8
-, "oa": 9
-, "oai": 10
-, "oi": 11
-, "io": 12
-, "u": 13
-, "ue": 14
-, "uei": 15
-, "ui": 16
-, "iu": 17
-, "eu": 18
-, "eui": 19
-, "i": 20
-};
-
-const patMap =
-{ '': 0
-, 'l': 8
-, 's': 19
-, 'ng': 21
-, 'n': 4
-, 'm': 16
-, 'g': 1
-, 'd': 7
-, 'b': 17
-};
-
-function codeToCode3(obj) {
-	if (obj.con == 'h' &&
-			(obj.vowel == 'a' || obj.vowel == 'i' || obj.vowel == 'u' || obj.vowel == 'e' || obj.vowel == 'o') &&
-			obj.pat == '')
-		obj.con = '';
-	else if (obj.con == '' &&
-			(obj.vowel == 'a' || obj.vowel == 'i' || obj.vowel == 'u' || obj.vowel == 'e' || obj.vowel == 'o') &&
-			obj.pat == '')
-		obj.con = 'h';
-	const con = conMap[obj.con];
-	const vowel = vowelMap[obj.vowel];
-	const pat = patMap[obj.pat];
-	return chr(ord('가') + con * 21 * 28 + vowel * 28 + pat);
-}
-
-//=========================
-
-const kanamap2 =
-{ 'ka':'か'
-, 'ki':'き'
-, 'ku':'く'
-, 'ke':'け'
-, 'ko':'こ'
-, 'sa':'さ'
-, 'si':'し'
-, 'su':'す'
-, 'se':'せ'
-, 'so':'そ'
-, 'ta':'た'
-, 'ti':'ち'
-, 'tu':'つ'
-, 'te':'て'
-, 'to':'と'
-, 'ha':'は'
-, 'hi':'ひ'
-, 'hu':'ふ'
-, 'he':'へ'
-, 'ho':'ほ'
-, 'na':'な'
-, 'ni':'に'
-, 'nu':'ぬ'
-, 'ne':'ね'
-, 'no':'の'
-, 'ma':'ま'
-, 'mi':'み'
-, 'mu':'む'
-, 'me':'め'
-, 'mo':'も'
-, 'ra':'ら'
-, 'ri':'り'
-, 'ru':'る'
-, 're':'れ'
-, 'ro':'ろ'
-, 'ga':'が'
-, 'gi':'ぎ'
-, 'gu':'ぐ'
-, 'ge':'げ'
-, 'go':'ご'
-, 'za':'ざ'
-, 'zi':'じ'
-, 'zu':'ず'
-, 'ze':'ぜ'
-, 'zo':'ぞ'
-, 'da':'だ'
-, 'di':'ぢ'
-, 'du':'づ'
-, 'de':'で'
-, 'do':'ど'
-, 'wa':'わ'
-, 'ya':'や'
-, 'yu':'ゆ'
-, 'yo':'よ'
-}
-
-const convertString = str => convertStringInner(str, '');
-
-function convertStringInner(str, acc) {
-	if (str.length == 0)
-		return acc;
-	else if (str[0] == 'a' || str[0] == 'i' || str[0] == 'u' || str[0] == 'e' || str[0] == 'o')
-		return convertStringInner(str.substr(1), acc + {'a':'あ','i':'い','u':'う','e':'え','o':'お'}[str[0]]);
-	else
-		return convertStringInner(str.substr(2), acc + kanamap2[str.substr(0,2)]);
-}
-
-//=========================
 
 function convertAll(str) {
-	let res = '';
-	const kanaStr = convertString(str);
-	for (var i = 0; i < kanaStr.length; i += 2) {
-		res += codeToCode3(codeToCode2(japaneseCharDualToCode(kanaStr[i], kanaStr[i + 1])));
-	}
-	return res;
+	return convertAll_aux(str, '');
 }
 
+function convertAll_aux(str, acc) {
+	if (!str)
+		return acc;
+	else {
+		const m = /^([^aeiou]?)([aeiou])([^aeiou]?)([aeiou])(.*)$/.exec(str);
+		if (m)
+			return convertAll_aux(m[5], acc + ko0ToKo(jaDualToKo0(m[1], m[2], m[3], m[4])));
+		else {
+			const n = /^([^aeiou]?)([aeiou])(.*)$/.exec(str);
+			return convertAll_aux(n[3], acc + ko0ToKo(jaDualToKo0(n[1], n[2])));
+		}
+	}
+}
 
 //========================= UI
 
 function handleConvert() {
-	translitInput.value = convertInput.value.replace(/\b(([ksthnmrgzd]?[aiueo]|wa|ya|yu|yo)+)\b/g, ($0, $1) => $0.replace($1, convertAll($1)));
+	translitInput.value = convertInput.value.replace(/\b(([ksthnmrgzdb]?[aiueo]|wa|ya|yu|yo|qi)+)\b/g, ($0, $1) => $0.replace($1, convertAll($1)));
+}
+
+function test() {
+	const v =
+		[ [ ['','a'], ['','i'], ['','u'], ['','e'], ['','o'] ]
+		, [ ['k','a'], ['k','i'], ['k','u'], ['k','e'], ['k','o'] ]
+		, [ ['s','a'], ['s','i'], ['s','u'], ['s','e'], ['s','o'] ]
+		, [ ['t','a'], ['t','i'], ['t','u'], ['t','e'], ['t','o'] ]
+		, [ ['h','a'], ['h','i'], ['h','u'], ['h','e'], ['h','o'] ]
+		, [ ['n','a'], ['n','i'], ['n','u'], ['n','e'], ['n','o'] ]
+		, [ ['m','a'], ['m','i'], ['m','u'], ['m','e'], ['m','o'] ]
+		, [ ['r','a'], ['r','i'], ['r','u'], ['r','e'], ['r','o'] ]
+		, [ ['g','a'], ['g','i'], ['g','u'], ['g','e'], ['g','o'] ]
+		, [ ['z','a'], ['z','i'], ['z','u'], ['z','e'], ['z','o'] ]
+		, [ ['d','a'], ['d','i'], ['d','u'], ['d','e'], ['d','o'] ]
+		, [ ['b','a'], ['b','i'], ['b','u'], ['b','e'], ['b','o'] ]
+		, [ ['y','a'], ['q','i'], ['y','u'], ['w','a'], ['y','o'] ]
+		];
+
+	for (var i = 0; i < v.length; i++) {
+		for (var j = 0; j < v[i].length; j++) {
+			for (var k = 0; k < v.length; k++) {
+				for (var l = 0; l < v[k].length; l++) {
+					const a = v[i][j][0],
+						b = v[i][j][1],
+						c = v[k][l][0],
+						d = v[k][l][1];
+					console.log(a+b+c+d, ko0ToKo(jaDualToKo0(a, b, c, d)));
+				}
+			}
+			const a = v[i][j][0],
+				b = v[i][j][1];
+			console.log(a+b, ko0ToKo(jaDualToKo0(a, b)));
+		}
+	}
 }
