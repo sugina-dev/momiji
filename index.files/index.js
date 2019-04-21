@@ -28,7 +28,12 @@ const handleArticleCsv = (str, path) => str
 			document.getElementById('h3_userinfo').innerHTML = '<a href="/api/auth/page/gitlab/forward">Log In via GitLab</a>';
 	} else {
 		const res = await response.text();
-		document.getElementById('contents_useronly').style.display = 'inherit';
+		document.getElementById('contents_useronly').innerHTML = `<section>
+	<h2>User Utilities</h2>
+	<article>
+		<h3><a href="board/message/">Message Board</a></h3>
+	</article>
+</section>`;
 		document.getElementById('h3_userinfo').innerHTML = `Welcome, ${res}. <a href="/api/auth/logout">Log Out</a>`;
 	}
 })();
@@ -39,6 +44,7 @@ const handleArticleCsv = (str, path) => str
 		return;
 	} else {
 		const str = await response.text();
+		document.getElementById('contents_pubdyn_offprint').innerHTML = '<h2>Articles</h2>';
 		document.getElementById('contents_pubdyn_offprint').innerHTML += handleArticleCsv(str, '/o/');
 	}
 })();
@@ -49,7 +55,12 @@ const adminArticlesLoaded = (async () => {
 		return;
 	} else {
 		const str = await response.text();
-		document.getElementById('contents_adminonly').style.display = 'inherit';
+		document.getElementById('contents_adminonly').innerHTML = `<section>
+	<h2>Admin Utilities</h2>
+	<article>
+		<h3><a href="board/manage/">Message Board Manager</a></h3>
+	</article>
+</section>`;
 		document.getElementById('contents_adminonly').innerHTML += handleArticleCsv(str, '/p/kakitsubata/');
 	}
 })();

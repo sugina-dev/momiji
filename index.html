@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>The Sugina Development Group</title>
+  <title>Sugina Development Group</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <script defer src="index.files/index.js"></script>
   <link rel="stylesheet" href="index.files/index.css"/>
+<style>
+a { text-decoration: none; }
+a:link { color: dodgerblue; }
+a:hover { color: deeppink; }
+</style>
 </head>
 <body>
-  <h1>The Sugina Development Group</h1>
-  <header lang="ojp" id="dictum"></header>
+  <h1>
+    <span>Sugina</span>
+    <span>Development</span>
+    <span>Group</span>
+  </h1>
+  <header lang="ojp"><p id="dictum"></p></header>
 
   <section>
     <h2>Utilities</h2>
@@ -35,23 +44,9 @@
     </article>
   </section>
 
-  <section id="contents_pubdyn_offprint">
-    <h2>Articles</h2>
-  </section>
-
-  <section id="contents_useronly">
-    <h2>User Utilities</h2>
-    <article>
-      <h3><a href="board/message/">Message Board</a></h3>
-    </article>
-  </section>
-
-  <section id="contents_adminonly">
-    <h2>Admin Utilities</h2>
-    <article>
-      <h3><a href="board/manage/">Message Board Manager</a></h3>
-    </article>
-  </section>
+  <div id="contents_pubdyn_offprint"></div>
+  <div id="contents_useronly"></div>
+  <div id="contents_adminonly"></div>
 
   <section>
     <h2>Projects</h2>
@@ -66,8 +61,10 @@
   </section>
 
   <footer>
-    Copyright &copy; 2018-2019 <a href="https://github.com/suginacc">The Sugina Development Group</a> -
-    <a href="/api/auth/login">Site Manager Area</a>
+    <p>
+      Copyright &copy; 2018-2019 <a href="https://github.com/suginacc">The Sugina Development Group</a> -
+      <a href="/api/auth/login">Site Manager Area</a>
+    </p>
   </footer>
 </body>
 </html>
