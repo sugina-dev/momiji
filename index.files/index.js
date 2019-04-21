@@ -44,7 +44,6 @@ const handleArticleCsv = (str, path) => str
 		return;
 	} else {
 		const str = await response.text();
-		document.getElementById('contents_pubdyn_offprint').innerHTML = '<h2>Articles</h2>';
 		document.getElementById('contents_pubdyn_offprint').innerHTML += handleArticleCsv(str, '/o/');
 	}
 })();
