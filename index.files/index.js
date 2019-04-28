@@ -38,16 +38,6 @@ const handleArticleCsv = (str, path) => str
 	}
 })();
 
-(async () => {
-	const response = await fetch('/o/index.csv');
-	if (!response.ok) {
-		return;
-	} else {
-		const str = await response.text();
-		document.getElementById('contents_pubdyn_offprint').innerHTML += handleArticleCsv(str, '/o/');
-	}
-})();
-
 const adminArticlesLoaded = (async () => {
 	const response = await fetch('/p/kakitsubata/index.csv');
 	if (!response.ok) {
