@@ -12,7 +12,7 @@ const handleArticleCsv = (str, path) => str
 	.join('');
 
 (async () => {
-	const response = await fetch('/api/dictum');
+	const response = await fetch('/t/dictum/');
 	if (!response.ok) {
 		return;
 	} else {
