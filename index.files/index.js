@@ -1,7 +1,7 @@
 'use strict';
 
 const makeArticle = (path, fileName, title) => `<article>
-	<h3><a href="${path + fileName}.html">${title}</a></h3>
+	<a href="${path + fileName}.html">${title}</a>
 </article>`;
 
 const handleArticleCsv = (str, path) => str
@@ -24,11 +24,11 @@ const userLoaded = (async () => {
 	const response = await fetch('/api/isuser');
 	if (!response.ok) {
 		if (response.status == 401)
-			document.getElementById('h3_userinfo').innerHTML = '<a href="/api/auth/page/gitlab/forward">Log In via GitLab</a>';
+			document.getElementById('h3_userinfo').innerHTML = '<a href="/api/auth/page/gitlab/forward">Log In via GitLab.</a>';
 	} else {
 		const res = await response.text();
 		document.getElementById('contents_useronly').style.display = 'inherit';
-		document.getElementById('h3_userinfo').innerHTML = `Welcome, ${res}. <a href="/api/auth/logout">Log Out</a>`;
+		document.getElementById('h3_userinfo').innerHTML = `Welcome, ${res}. <a href="/api/auth/logout">Log Out.</a>`;
 	}
 })();
 
@@ -55,4 +55,4 @@ const adminLoaded = (async () => {
 (async () => {
 	await Promise.all([dictumLoaded, userLoaded, adminLoaded]);
 	document.body.style.display = 'inherit';
-})
+})();
