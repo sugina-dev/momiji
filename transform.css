@@ -1,21 +1,3 @@
-@font-face {
-	font-family: "Alex Brush Font";
-	src: url("font/AlexBrush-Regular.ttf");
-}
-
-@font-face {
-	font-family: "Imprima";
-	src: url("font/Imprima-Regular.ttf");
-}
-
-.alexBrush {
-	font-family: "Alex Brush Font", sans-serif;
-}
-
-.imprima {
-	font-family: "Imprima", sans-serif;
-}
-
 * {
 	box-sizing: border-box;
 }
