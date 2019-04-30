@@ -4,51 +4,62 @@
   <title>Sugina Development Group</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <base target="_blank"/>
   <script defer src="index.files/index.js"></script>
 <style>
 a { text-decoration: none; }
 a:link { color: dodgerblue; }
 a:hover { color: deeppink; }
+body { line-height: 1.5; }
+article { display: block; }
 </style>
 </head>
-<body>
+<body style="display: none;">
   <h1>Sugina Development Group</h1>
   <header lang="ojp"><p id="dictum"></p></header>
 
   <article>
-    <h3 id="h3_userinfo"></h3>
-    <p>After log in via GitLab, you can post comments to keep in touch with us.</p>
+    <span id="h3_userinfo"></span>
+    <span>After log in via GitLab, you can post comments to keep in touch with us.</span>
   </article>
 
   <article>
-    <h3><a href="kanji">Kanji</a></h3>
-    <p>Comprehensive pronunciation finder for Chinese characters. It is made for testing the database of our server, and testing the database of ourselves.</p>
+    <a href="kanji">Kanji</a>
+    <span>Comprehensive pronunciation finder for Chinese characters. It is made for testing the database of our server, and testing the database of ourselves.</span>
   </article>
 
   <article>
-    <h3><a href="c/">Contrib</a></h3>
-    <p>Extra experimental modules.</p>
+    <a href="c/">Contrib</a>
+    <span>Extra experimental modules.</span>
   </article>
 
-  <div id="contents_useronly"></div>
-  <div id="contents_adminonly"></div>
+  <article id="contents_useronly" style="display: none;">
+    <span><a href="board/message/">Message Board</a></span>
+  </article>
 
-  <article>
-    <h3><a href="https://github.com/suginacc/momiji">Momiji</a></h3>
-    <p>The front end for the Sugina Development Group website. It also contains some utilities in JavaScript.</p>
+  <article id="contents_adminonly" style="display: none;">
+    <span><a href="board/manage/">Message Board Manager</a></span>
   </article>
 
   <article>
-    <h3><a href="https://github.com/suginacc/sugina">Sugina</a></h3>
-    <p>The main back end for the Sugina Development Group website. Written in Haskell to ensure type safety, it is an open-source project built for our bright futures.</p>
+    <a href="https://github.com/suginacc/momiji">Momiji</a>
+    <span>The front end for the Sugina Development Group website. It also contains some utilities in JavaScript.</span>
+  </article>
+
+  <article>
+    <a href="https://github.com/suginacc/sugina">Sugina</a>
+    <span>The main back end for the Sugina Development Group website. Written in Haskell to ensure type safety, it is an open-source project built for our bright futures.</span>
+  </article>
+
+  <article>
+    <a href="https://github.com/suginacc/tsubame">Tsubame</a>
+    <span>The new main back end for the Sugina Development Group website, previously written in Haskell, now written in Go to ensure type safety.</span>
   </article>
 
   <footer>
-    <p>
+    <span>
       Copyright &copy; 2018-2019 <a href="https://github.com/suginacc">The Sugina Development Group</a> -
       <a href="/api/auth/login">Site Manager Area</a>
-    </p>
+    </span>
   </footer>
 </body>
 </html>
