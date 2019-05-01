@@ -34,7 +34,7 @@ const adminArticlesLoaded = (async () => {
 	if (!response.ok) {
 		return;
 	} else {
-		const str = await response.text();
+		const str = await response.json();
 		document.getElementById('contents_adminonly').style.display = 'inherit';
 		document.getElementById('contents_adminonly').outerHTML += handleArticleJson(str, '/p/kakitsubata/');
 	}
