@@ -37,7 +37,7 @@ nav ul {
 }
 
 nav > ul > li > ul {
-	padding: 0rem;
+	padding-left: 1rem;
 }
 
 nav > ul > li > ul > li > ul {
