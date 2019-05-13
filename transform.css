@@ -28,13 +28,8 @@ h2 {
 	padding: 0.25rem 1rem 0.25rem 1rem;
 }
 
-nav + h1, nav > ul > li > a, figcaption {
+figcaption {
 	display: none;
-}
-
-nav > ul {
-	margin-left: 0.125rem;
-	list-style-type: none;
 }
 
 nav ul {
